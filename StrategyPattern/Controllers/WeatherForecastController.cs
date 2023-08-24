@@ -11,15 +11,17 @@ namespace StrategyPattern.Controllers
         private readonly PaymentStrategyDictionary _paymentDictioanry;
         private readonly PaymentStrategyEnumerable _paymentEnumerable;
         private readonly PaymentStrategyDelegate _paymentDelegate;
+        private readonly PaymentStrategyParrentDelegate _paymentParrentDelegate;
         public WeatherForecastController(
             //PaymentStrategyDictionary paymentDictioanry, 
             //PaymentStrategyEnumerable paymentEnumerable, 
-            PaymentStrategyDelegate paymentDelegate
-            )
+            //PaymentStrategyDelegate paymentDelegate, 
+            PaymentStrategyParrentDelegate paymentParrentDelegate)
         {
             //_paymentDictioanry = paymentDictioanry;
             //_paymentEnumerable = paymentEnumerable;
-            _paymentDelegate = paymentDelegate;
+            //_paymentDelegate = paymentDelegate;
+            _paymentParrentDelegate = paymentParrentDelegate;
         }
 
         [HttpGet("GetDictioanry/")]
@@ -54,6 +56,19 @@ namespace StrategyPattern.Controllers
             try
             {
                 return _paymentDelegate(payment).Execute();
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+
+        [HttpGet("PaymentStrategyParrentDelegate/")]
+        public string Get4(Payment payment)
+        {
+            try
+            {
+                return _paymentParrentDelegate(payment).Execute();
             }
             catch (Exception ex)
             {

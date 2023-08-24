@@ -2,7 +2,7 @@
 
 namespace StrategyPattern.Services.PaymentMethods
 {
-    public class ConcretePaymentStrategy : IPaymentStrategy
+    public class ConcretePaymentStrategy : IPaymentStrategy, IConcreteStrategy
     {
         public int MyProperty { get; set; }
         public ConcretePaymentStrategy()

@@ -2,7 +2,7 @@
 
 namespace StrategyPattern.Services.PaymentMethods
 {
-    public class PartialPaymentStrategy : IPaymentStrategy
+    public class PartialPaymentStrategy : IPaymentStrategy, IPartialStrategy
     {
         public int MyProperty { get; set; }
         public PartialPaymentStrategy()

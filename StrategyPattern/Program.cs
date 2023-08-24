@@ -15,6 +15,9 @@ builder.Services.AddSwaggerGen();
 //for Enumerable
 builder.Services.AddScoped<IPaymentStrategy, PartialPaymentStrategy>();
 builder.Services.AddScoped<IPaymentStrategy, ConcretePaymentStrategy>();
+//for ParrentDelegate
+builder.Services.AddScoped<IPartialStrategy, PartialPaymentStrategy>();
+builder.Services.AddScoped<IConcreteStrategy, ConcretePaymentStrategy>();
 //for Dictionary and Delegate
 builder.Services.AddScoped<PartialPaymentStrategy>();
 builder.Services.AddScoped<ConcretePaymentStrategy>();
@@ -33,6 +36,13 @@ builder.Services.AddScoped<PaymentStrategyDelegate>(serviceProvider => key => ke
     {
         Payment.Concrete => serviceProvider.GetRequiredService<PartialPaymentStrategy>(),
         Payment.Partial => serviceProvider.GetRequiredService<ConcretePaymentStrategy>(),
+        _ => throw new KeyNotFoundException(),
+    });
+//with ParrentDelegate
+builder.Services.AddScoped<PaymentStrategyParrentDelegate>(serviceProvider => key => key switch
+    {
+        Payment.Concrete => serviceProvider.GetRequiredService<IConcreteStrategy>(),
+        Payment.Partial => serviceProvider.GetRequiredService<IPartialStrategy>(),
         _ => throw new KeyNotFoundException(),
     });
 
