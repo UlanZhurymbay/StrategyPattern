@@ -23,15 +23,11 @@ builder.Services.AddScoped<ConcretePaymentStrategy>();
 //with Enumerable
 builder.Services.AddScoped<PaymentStrategyEnumerable>();
 //with Dictionary
-builder.Services.AddScoped<PaymentStrategyDictionary>(provider =>
-{
-    var dictionary = new PaymentStrategyDictionary
+builder.Services.AddScoped<PaymentStrategyDictionary>(provider => new PaymentStrategyDictionary
     {
         { Payment.Partial, provider.GetService<PartialPaymentStrategy>() },
         { Payment.Concrete, provider.GetService<ConcretePaymentStrategy>() }
-    };
-    return dictionary;
-});
+    });
 //with Delegate
 builder.Services.AddScoped<PaymentStrategyDelegate>(serviceProvider => key => key switch
     {
